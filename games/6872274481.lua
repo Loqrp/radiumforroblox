@@ -10291,3 +10291,31 @@ run(function()
 		List = WinEffectName
 	})
 end)
+
+
+run(function()
+    local Chatmover = vape.Categories.Render:CreateModule({
+        Name = "ChatMover",
+        Tooltip = "Moves chat to bottom",
+        Function = function(callback)
+            if callback then
+                local originalAlignment = nil
+                
+                if textChatService.ChatWindowConfiguration then
+                    originalAlignment = textChatService.ChatWindowConfiguration.VerticalAlignment
+                    textChatService.ChatWindowConfiguration.VerticalAlignment = Enum.VerticalAlignment.Bottom
+                end
+                
+                local function cleanup()
+                    if originalAlignment and textChatService.ChatWindowConfiguration then
+                        textChatService.ChatWindowConfiguration.VerticalAlignment = originalAlignment
+                    end
+                end
+                
+                Chatmover:Clean(function()
+                    cleanup()
+                end)
+            end
+        end
+    })
+end)
