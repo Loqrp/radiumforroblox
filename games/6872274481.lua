@@ -8495,7 +8495,6 @@ end)
 
 
 
-
 run(function()
     local TexturePack = {}
     
@@ -8533,7 +8532,7 @@ run(function()
     
     TexturePack = vape.Categories.Render:CreateModule({
         Name = "TexturePack",
-        Tooltip = "Texture packs V3 - First Pack Only",
+        Tooltip = "Texture pack",
         Function = function(callback)
             if callback then
                 packfunctions["FirstPack"]()
