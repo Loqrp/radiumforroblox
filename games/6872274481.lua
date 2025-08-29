@@ -10292,30 +10292,104 @@ run(function()
 	})
 end)
 
-
 run(function()
     local Chatmover = vape.Categories.Render:CreateModule({
-        Name = "ChatMover",
-        Tooltip = "Moves chat to bottom",
+        Name = "Chatmover",
         Function = function(callback)
             if callback then
                 local originalAlignment = nil
                 
-                if textChatService.ChatWindowConfiguration then
+                if textChatService and textChatService.ChatWindowConfiguration then
                     originalAlignment = textChatService.ChatWindowConfiguration.VerticalAlignment
                     textChatService.ChatWindowConfiguration.VerticalAlignment = Enum.VerticalAlignment.Bottom
                 end
                 
                 local function cleanup()
-                    if originalAlignment and textChatService.ChatWindowConfiguration then
+                    if originalAlignment and textChatService and textChatService.ChatWindowConfiguration then
                         textChatService.ChatWindowConfiguration.VerticalAlignment = originalAlignment
                     end
                 end
                 
-                Chatmover:Clean(function()
-                    cleanup()
+                Chatmover:Clean(cleanup)
+            end
+        end,
+        Tooltip = "Moves chat to bottom"
+    })
+end)
+
+run(function()
+    local Watermark = vape.Categories.Utility:CreateModule({
+        Name = "Watermark",
+        Function = function(callback)
+            if callback then
+                local radium = Instance.new("ScreenGui")
+                local centering = Instance.new("Frame")
+                local text = Instance.new("TextLabel")
+                
+                radium.Name = "radium"
+                radium.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+                radium.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                
+                centering.Name = "centering"
+                centering.Parent = radium
+                centering.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                centering.BackgroundTransparency = 1.000
+                centering.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                centering.BorderSizePixel = 0
+                centering.Size = UDim2.new(1, 0, 1, 0)
+                
+                text.Name = "text"
+                text.Parent = centering
+                text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                text.BackgroundTransparency = 1.000
+                text.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                text.BorderSizePixel = 0
+                text.Size = UDim2.new(0, 200, 0, 50)
+                text.Font = Enum.Font.Unknown
+                text.Text = "Radium"
+                text.TextColor3 = Color3.fromRGB(255, 255, 255)
+                text.TextSize = 25.000
+                text.TextXAlignment = Enum.TextXAlignment.Left
+                text.TextYAlignment = Enum.TextYAlignment.Top
+                
+                Watermark.radium = radium
+                Watermark.text = text
+                
+                Watermark:Clean(function()
+                    if radium and radium.Parent then
+                        radium:Destroy()
+                    end
                 end)
             end
-        end
+        end,
+        Tooltip = "Customizable watermark"
     })
+    
+    local textInput = Watermark:CreateTextbox({
+        Name = "Watermark Text",
+        Default = "Radium"
+    })
+    
+    local colorPicker = Watermark:CreateColorSlider({
+        Name = "Watermark Color",
+        DefaultHue = 0,
+        DefaultSat = 0,
+        DefaultValue = 1,
+        DefaultOpacity = 1
+    })
+    
+    local function updateWatermark()
+        if Watermark.text then
+            Watermark.text.Text = textInput.Value
+            Watermark.text.TextColor3 = Color3.fromHSV(colorPicker.Hue, colorPicker.Sat, colorPicker.Value)
+        end
+    end
+    
+    textInput:Bind(function()
+        updateWatermark()
+    end)
+    
+    colorPicker:Bind(function()
+        updateWatermark()
+    end)
 end)
