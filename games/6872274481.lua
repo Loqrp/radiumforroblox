@@ -8492,12 +8492,11 @@ run(function()
 end)
 	
 
-
-
 run(function()
-    local TexturePack = vape.Categories.Render:CreateModule({
-        Name = "TexturePack",
-        Tooltip = "Texture pack",
+    local TexturePack
+    
+    TexturePack = vape.Categories.Render:CreateModule({
+        Name = 'TexturePack',
         Function = function(callback)
             if callback then
                 workspace.CurrentCamera.Viewmodel.ChildAdded:Connect(function(x)
@@ -8518,7 +8517,8 @@ run(function()
                 
                 TexturePack:Clean(heartbeat)
             end
-        end
+        end,
+        Tooltip = 'Texture pak'
     })
     
     local list = {"FirstPack"}
