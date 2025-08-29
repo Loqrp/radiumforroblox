@@ -8534,12 +8534,10 @@ run(function()
     
     TexturePacksV3 = vape.Categories.Render:CreateModule({
         ["Name"] = "TexturePack",
-        ["Tooltip"] = "Texture packs V3 - First Pack Only",
+        ["Tooltip"] = "Texture pack",
         ["Function"] = function(callback)
             if callback then
-                if TexturePacksV3.Enabled then
-                    packfunctions["FirstPack"]()
-                end
+                packfunctions["FirstPack"]()
                 
                 local heartbeat = runService.Heartbeat:Connect(function()
                     if not TexturePacksV3.Enabled then
@@ -8557,16 +8555,14 @@ run(function()
     local packselected = TexturePacksV3:CreateDropdown({
         ["Name"] = "Pack",
         ["Function"] = function() 
-            if TexturePacksV3.Enabled then 
-                packfunctions["FirstPack"]()
-            end 
+            packfunctions["FirstPack"]()
         end,
         ["List"] = list,
         ["Default"] = "FirstPack"
     })
     
     TexturePacksV3:CreateToggle({
-        Name = "zasdjydsfskdjsdfkjhy",
-        Default = true
+        Name = "p",
+        Default = false
     })
 end)
