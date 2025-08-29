@@ -8494,48 +8494,21 @@ end)
 
 
 
-
 run(function()
-    local TexturePack = {}
-    
-    local packfunctions = {
-        FirstPack = function()
-            task.spawn(function()
-                local Players = game:GetService("Players")
-                local ReplicatedStorage = game:GetService("ReplicatedStorage")
-                local Workspace = game:GetService("Workspace")
-                
-                local objs = game:GetObjects("rbxassetid://13801509384")
-                local import = objs[1]
-                import.Parent = ReplicatedStorage
-                
-                local index = {
-                    {
-                        name = "wood_sword",
-                        offset = CFrame.Angles(math.rad(0), math.rad(-100), math.rad(-90)),
-                        model = import:WaitForChild("Wood_Sword"),
-                    },
-                    {
-                        name = "stone_sword",
-                        offset = CFrame.Angles(math.rad(0), math.rad(-100), math.rad(-90)),
-                        model = import:WaitForChild("Stone_Sword"),
-                    },
-                    {
-                        name = "iron_sword",
-                        offset = CFrame.Angles(math.rad(0), math.rad(-100), math.rad(-90)),
-                        model = import:WaitForChild("Iron_Sword"),
-                    }
-                }
-            end)
-        end
-    }
-    
-    TexturePack = vape.Categories.Render:CreateModule({
+    local TexturePack = vape.Categories.Render:CreateModule({
         Name = "TexturePack",
         Tooltip = "Texture pack",
         Function = function(callback)
             if callback then
-                packfunctions["FirstPack"]()
+                workspace.CurrentCamera.Viewmodel.ChildAdded:Connect(function(x)
+                    if x and x:FindFirstChild("Handle") then
+                        if string.find(x.Name:lower(), 'sword') then
+                            x.Handle.Material = "ForceField"
+                            x.Handle.MeshId = "rbxassetid://13471207377"
+                            x.Handle.BrickColor = BrickColor.new("Hot pink")
+                        end
+                    end
+                end)
                 
                 local heartbeat = runService.Heartbeat:Connect(function()
                     if not TexturePack.Enabled then
@@ -8553,7 +8526,15 @@ run(function()
     local packselected = TexturePack:CreateDropdown({
         Name = "Pack",
         Function = function() 
-            packfunctions["FirstPack"]()
+            workspace.CurrentCamera.Viewmodel.ChildAdded:Connect(function(x)
+                if x and x:FindFirstChild("Handle") then
+                    if string.find(x.Name:lower(), 'sword') then
+                        x.Handle.Material = "ForceField"
+                        x.Handle.MeshId = "rbxassetid://13471207377"
+                        x.Handle.BrickColor = BrickColor.new("Hot pink")
+                    end
+                end
+            end)
         end,
         List = list,
         Default = "FirstPack"
