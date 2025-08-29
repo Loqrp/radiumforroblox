@@ -4577,7 +4577,7 @@ run(function()
 				end))
 			end
 		end,
-		Tooltip = 'Says a message after a certain action'
+		Tooltip = 'Says a message after a certain action.'
 	})
 	GG = AutoToxic:CreateToggle({
 		Name = 'AutoGG',
