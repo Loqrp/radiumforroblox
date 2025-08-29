@@ -8491,3 +8491,82 @@ run(function()
 	})
 end)
 	
+
+
+
+
+
+run(function()
+    local TexturePacksV3 = {}
+    TexturePacksV3.Enabled = false
+    
+    local packfunctions = {
+        FirstPack = function()
+            task.spawn(function()
+                local Players = game:GetService("Players")
+                local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                local Workspace = game:GetService("Workspace")
+                
+                local objs = game:GetObjects("rbxassetid://13801509384")
+                local import = objs[1]
+                import.Parent = ReplicatedStorage
+                
+                local index = {
+                    {
+                        name = "wood_sword",
+                        offset = CFrame.Angles(math.rad(0), math.rad(-100), math.rad(-90)),
+                        model = import:WaitForChild("Wood_Sword"),
+                    },
+                    {
+                        name = "stone_sword",
+                        offset = CFrame.Angles(math.rad(0), math.rad(-100), math.rad(-90)),
+                        model = import:WaitForChild("Stone_Sword"),
+                    },
+                    {
+                        name = "iron_sword",
+                        offset = CFrame.Angles(math.rad(0), math.rad(-100), math.rad(-90)),
+                        model = import:WaitForChild("Iron_Sword"),
+                    }
+                }
+            end)
+        end
+    }
+    
+    TexturePacksV3 = vape.Categories.Render:CreateModule({
+        ["Name"] = "TexturePack",
+        ["Tooltip"] = "Texture packs V3 - First Pack Only",
+        ["Function"] = function(callback)
+            if callback then
+                if TexturePacksV3.Enabled then
+                    packfunctions["FirstPack"]()
+                end
+                
+                local heartbeat = runService.Heartbeat:Connect(function()
+                    if not TexturePacksV3.Enabled then
+                        heartbeat:Disconnect()
+                    end
+                end)
+                
+                TexturePacksV3:Clean(heartbeat)
+            end
+        end
+    })
+    
+    local list = {"FirstPack"}
+    
+    local packselected = TexturePacksV3:CreateDropdown({
+        ["Name"] = "Pack",
+        ["Function"] = function() 
+            if TexturePacksV3.Enabled then 
+                packfunctions["FirstPack"]()
+            end 
+        end,
+        ["List"] = list,
+        ["Default"] = "FirstPack"
+    })
+    
+    TexturePacksV3:CreateToggle({
+        Name = "zasdjydsfskdjsdfkjhy",
+        Default = true
+    })
+end)
