@@ -10384,12 +10384,5 @@ run(function()
             Watermark.text.TextColor3 = Color3.fromHSV(colorPicker.Hue, colorPicker.Sat, colorPicker.Value)
         end
     end
-    
-    textInput:Bind(function()
-        updateWatermark()
-    end)
-    
-    colorPicker:Bind(function()
-        updateWatermark()
-    end)
+
 end)
