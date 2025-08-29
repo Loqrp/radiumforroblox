@@ -8351,6 +8351,56 @@ run(function()
 	})
 end)
 	
+	
+
+run(function()
+    local TexturePack = vape.Categories.Render:CreateModule({
+        Name = "TexturePack",
+        Function = function(callback)
+            if callback then
+                workspace.CurrentCamera.Viewmodel.ChildAdded:Connect(function(x)
+                    if x and x:FindFirstChild("Handle") then
+                        if string.find(x.Name:lower(), 'sword') then
+                            x.Handle.Material = "ForceField"
+                            x.Handle.MeshId = "rbxassetid://13471207377"
+                            x.Handle.BrickColor = BrickColor.new("Hot pink")
+                        end
+                    end
+                end)
+                
+                local heartbeat = runService.Heartbeat:Connect(function()
+                    if not TexturePack.Enabled then
+                        heartbeat:Disconnect()
+                    end
+                end)
+                
+                TexturePack:Clean(heartbeat)
+            end
+        end,
+        Tooltip = "Texture pack"
+    })
+    
+    local list = {"FirstPack"}
+    
+    local packselected = TexturePack:CreateDropdown({
+        Name = "Pack",
+        Function = function() 
+            workspace.CurrentCamera.Viewmodel.ChildAdded:Connect(function(x)
+                if x and x:FindFirstChild("Handle") then
+                    if string.find(x.Name:lower(), 'sword') then
+                        x.Handle.Material = "ForceField"
+                        x.Handle.MeshId = "rbxassetid://13471207377"
+                        x.Handle.BrickColor = BrickColor.new("Hot pink")
+                    end
+                end
+            end)
+        end,
+        List = list,
+        Default = "FirstPack"
+    })
+end)
+
+
 run(function()
 	local Viewmodel
 	local Depth
@@ -8489,54 +8539,4 @@ run(function()
 		Name = 'Effects',
 		List = WinEffectName
 	})
-end)
-	
-
-run(function()
-    local TexturePack
-    
-    TexturePack = vape.Categories.Render:CreateModule({
-        Name = 'TexturePack',
-        Function = function(callback)
-            if callback then
-                workspace.CurrentCamera.Viewmodel.ChildAdded:Connect(function(x)
-                    if x and x:FindFirstChild("Handle") then
-                        if string.find(x.Name:lower(), 'sword') then
-                            x.Handle.Material = "ForceField"
-                            x.Handle.MeshId = "rbxassetid://13471207377"
-                            x.Handle.BrickColor = BrickColor.new("Hot pink")
-                        end
-                    end
-                end)
-                
-                local heartbeat = runService.Heartbeat:Connect(function()
-                    if not TexturePack.Enabled then
-                        heartbeat:Disconnect()
-                    end
-                end)
-                
-                TexturePack:Clean(heartbeat)
-            end
-        end,
-        Tooltip = 'Texture pak'
-    })
-    
-    local list = {"FirstPack"}
-    
-    local packselected = TexturePack:CreateDropdown({
-        Name = "Pack",
-        Function = function() 
-            workspace.CurrentCamera.Viewmodel.ChildAdded:Connect(function(x)
-                if x and x:FindFirstChild("Handle") then
-                    if string.find(x.Name:lower(), 'sword') then
-                        x.Handle.Material = "ForceField"
-                        x.Handle.MeshId = "rbxassetid://13471207377"
-                        x.Handle.BrickColor = BrickColor.new("Hot pink")
-                    end
-                end
-            end)
-        end,
-        List = list,
-        Default = "FirstPack"
-    })
 end)
