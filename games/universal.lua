@@ -7967,7 +7967,7 @@ run(function()
         Function = function(callback)
             if callback then
                 watermarkScreenGui = Instance.new("ScreenGui")
-                watermarkScreenGui.Name = "shit"
+                watermarkScreenGui.Name = "Watermark"
                 watermarkScreenGui.ResetOnSpawn = false
                 watermarkScreenGui.Parent = vape.gui
                 WatermarkModule.Module:Clean(function()
@@ -8008,7 +8008,7 @@ run(function()
         Tooltip = "Displays a watermark"
     })
 
-    WatermarkModule.Module:CreateTextBox({
+    local textBoxObject = WatermarkModule.Module:CreateTextBox({
         Name = "Text",
         Default = "Radium",
         Function = function(val)
