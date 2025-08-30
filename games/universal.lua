@@ -7937,3 +7937,109 @@ run(function()
 	
 end)
 	
+
+
+run(function()
+    local WatermarkModule = {}
+    local watermarkScreenGui
+    local watermarkTextLabel
+    local textSizeSliderObject
+
+    local function updateTextLabelSize()
+        if watermarkTextLabel and textSizeSliderObject then
+            local desiredSize = textSizeSliderObject.Value
+            watermarkTextLabel.TextSize = desiredSize
+
+            local textService = game:GetService("TextService")
+            local fontFace = Font.new("rbxassetid://11702779240")
+            local textSize = textService:GetTextSize(
+                watermarkTextLabel.Text,
+                watermarkTextLabel.TextSize,
+                fontFace,
+                Vector2.new(2000, 2000)
+            )
+            watermarkTextLabel.Size = UDim2.new(0, textSize.X + 10, 0, textSize.Y + 5)
+        end
+    end
+
+    WatermarkModule.Module = vape.Categories.Render:CreateModule({
+        Name = "Watermark",
+        Function = function(callback)
+            if callback then
+                watermarkScreenGui = Instance.new("ScreenGui")
+                watermarkScreenGui.Name = "VapeWatermark"
+                watermarkScreenGui.ResetOnSpawn = false
+                watermarkScreenGui.Parent = vape.gui
+                WatermarkModule.Module:Clean(function()
+                    pcall(function() watermarkScreenGui:Destroy() end)
+                    watermarkScreenGui = nil
+                    watermarkTextLabel = nil
+                end)
+
+                local containerFrame = Instance.new("Frame")
+                containerFrame.Name = "Container"
+                containerFrame.BackgroundTransparency = 1
+                containerFrame.Size = UDim2.new(1, 0, 1, 0)
+                containerFrame.Parent = watermarkScreenGui
+
+                watermarkTextLabel = Instance.new("TextLabel")
+                watermarkTextLabel.Name = "WatermarkLabel"
+                watermarkTextLabel.BackgroundTransparency = 1
+                watermarkTextLabel.Size = UDim2.new(0, 200, 0, 50)
+                watermarkTextLabel.Position = UDim2.new(0, 10, 0, 10)
+                watermarkTextLabel.FontFace = Font.new("rbxassetid://11702779240")
+                watermarkTextLabel.Text = "Radium"
+                watermarkTextLabel.TextColor3 = Color3.new(1, 1, 1)
+                watermarkTextLabel.TextSize = 24
+                watermarkTextLabel.TextXAlignment = Enum.TextXAlignment.Left
+                watermarkTextLabel.TextYAlignment = Enum.TextYAlignment.Top
+                watermarkTextLabel.Parent = containerFrame
+
+                updateTextLabelSize()
+
+            else
+                if watermarkScreenGui then
+                    pcall(function() watermarkScreenGui:Destroy() end)
+                    watermarkScreenGui = nil
+                    watermarkTextLabel = nil
+                end
+            end
+        end,
+        Tooltip = "Displays a watermark."
+    })
+
+    WatermarkModule.Module:CreateTextBox({
+        Name = "Text",
+        Default = "Radium",
+        Function = function(val)
+            if watermarkTextLabel then
+                watermarkTextLabel.Text = val
+                updateTextLabelSize()
+            end
+        end
+    })
+
+    WatermarkModule.Module:CreateColorSlider({
+        Name = "Color",
+        DefaultHue = 0,
+        DefaultSat = 0,
+        DefaultValue = 1,
+        DefaultOpacity = 1,
+        Function = function(hue, sat, val, opacity)
+            if watermarkTextLabel then
+                watermarkTextLabel.TextColor3 = Color3.fromHSV(hue, sat, val)
+            end
+        end
+    })
+
+    textSizeSliderObject = WatermarkModule.Module:CreateSlider({
+        Name = "Size",
+        Min = 10,
+        Max = 100,
+        Default = 24,
+        Function = function(val)
+            updateTextLabelSize()
+        end
+    })
+
+end)
