@@ -7945,7 +7945,7 @@ run(function()
     local watermarkTextLabel
     local textSizeSliderObject
 
-    local function updateTextLabelSize()
+    local function updateTextLabelDisplay()
         if watermarkTextLabel and textSizeSliderObject then
             local desiredSize = textSizeSliderObject.Value
             watermarkTextLabel.TextSize = desiredSize
@@ -7967,7 +7967,7 @@ run(function()
         Function = function(callback)
             if callback then
                 watermarkScreenGui = Instance.new("ScreenGui")
-                watermarkScreenGui.Name = "Watermark"
+                watermarkScreenGui.Name = "shit"
                 watermarkScreenGui.ResetOnSpawn = false
                 watermarkScreenGui.Parent = vape.gui
                 WatermarkModule.Module:Clean(function()
@@ -7995,7 +7995,7 @@ run(function()
                 watermarkTextLabel.TextYAlignment = Enum.TextYAlignment.Top
                 watermarkTextLabel.Parent = containerFrame
 
-                updateTextLabelSize()
+                updateTextLabelDisplay()
 
             else
                 if watermarkScreenGui then
@@ -8014,7 +8014,7 @@ run(function()
         Function = function(val)
             if watermarkTextLabel then
                 watermarkTextLabel.Text = val
-                updateTextLabelSize()
+                updateTextLabelDisplay()
             end
         end
     })
@@ -8038,7 +8038,7 @@ run(function()
         Max = 100,
         Default = 24,
         Function = function(val)
-            updateTextLabelSize()
+            updateTextLabelDisplay()
         end
     })
 
