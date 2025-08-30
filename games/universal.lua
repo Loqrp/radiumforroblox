@@ -7967,7 +7967,7 @@ run(function()
         Function = function(callback)
             if callback then
                 watermarkScreenGui = Instance.new("ScreenGui")
-                watermarkScreenGui.Name = "VapeWatermark"
+                watermarkScreenGui.Name = "Watermark"
                 watermarkScreenGui.ResetOnSpawn = false
                 watermarkScreenGui.Parent = vape.gui
                 WatermarkModule.Module:Clean(function()
@@ -7988,7 +7988,7 @@ run(function()
                 watermarkTextLabel.Size = UDim2.new(0, 200, 0, 50)
                 watermarkTextLabel.Position = UDim2.new(0, 10, 0, 10)
                 watermarkTextLabel.FontFace = Font.new("rbxassetid://11702779240")
-                watermarkTextLabel.Text = "Radium"
+                watermarkTextLabel.Text = cooltext
                 watermarkTextLabel.TextColor3 = Color3.new(1, 1, 1)
                 watermarkTextLabel.TextSize = 24
                 watermarkTextLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -8008,15 +8008,9 @@ run(function()
         Tooltip = "Displays a watermark."
     })
 
-    WatermarkModule.Module:CreateTextBox({
+    cooltext = WatermarkModule.Module:CreateTextBox({
         Name = "Text",
         Default = "Radium",
-        Function = function(val)
-            if watermarkTextLabel then
-                watermarkTextLabel.Text = val
-                updateTextLabelSize()
-            end
-        end
     })
 
     WatermarkModule.Module:CreateColorSlider({
