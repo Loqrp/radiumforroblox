@@ -7947,19 +7947,18 @@ run(function()
     local textSizeSlider
 
     local function updateTextLabelSize()
-        if textLabelElement and textSizeSlider then
-            local textSize = textSizeSlider.Value
-            textLabelElement.TextSize = textSize
-            
-            local textService = game:GetService("TextService")
-            local textBounds = textService:GetTextSize(
-                textLabelElement.Text,
-                textLabelElement.TextSize,
-                textLabelElement.FontFace,
-                Vector2.new(math.huge, math.huge)
-            )
-            textLabelElement.Size = UDim2.new(0, textBounds.X + 10, 0, textBounds.Y + 10)
-        end
+        if not textLabelElement then return end
+        local textSize = textSizeSlider.Value
+        textLabelElement.TextSize = textSize
+
+        local textService = game:GetService("TextService")
+        local textBounds = textService:GetTextSize(
+            textLabelElement.Text,
+            textLabelElement.TextSize,
+            textLabelElement.FontFace,
+            Vector2.new(math.huge, math.huge)
+        )
+        textLabelElement.Size = UDim2.new(0, textBounds.X + 10, 0, textBounds.Y + 10)
     end
 
     WatermarkModule = vape.Categories.Render:CreateModule({
@@ -7967,13 +7966,13 @@ run(function()
         Function = function(callback)
             if callback then
                 local screenGui = Instance.new("ScreenGui")
-                screenGui.Name = "bz"
+                screenGui.Name = "WatermarkGUI"
                 screenGui.ResetOnSpawn = false
                 screenGui.Parent = vape.gui
                 WatermarkModule:Clean(function() pcall(function() screenGui:Destroy() end) end)
 
                 local f1 = Instance.new("Frame")
-                f1.Name = "b"
+                f1.Name = "aligment"
                 f1.Parent = screenGui
                 f1.BackgroundTransparency = 1
                 f1.Size = UDim2.new(1, 0, 1, 0)
@@ -7992,6 +7991,7 @@ run(function()
                 textLabelElement = textLabel
 
                 updateTextLabelSize()
+
             else
                 if watermarkElement then
                     pcall(function() watermarkElement:Destroy() end)
@@ -8000,7 +8000,7 @@ run(function()
                 end
             end
         end,
-        Tooltip = "Displays a watermark"
+        Tooltip = "Displays a customizable watermark."
     })
 
     WatermarkModule:CreateTextBox({
@@ -8008,7 +8008,7 @@ run(function()
         Default = "Radium",
         Function = function(val)
             if textLabelElement then
-                textLabelElement.Text = val
+                textLabelElement.Text = tostring(val)
                 updateTextLabelSize()
             end
         end
