@@ -7972,7 +7972,7 @@ run(function()
                 WatermarkModule:Clean(function() pcall(function() screenGui:Destroy() end) end)
 
                 local f1 = Instance.new("Frame")
-                f1.Name = "aligment	"
+                f1.Name = "aligment"
                 f1.Parent = screenGui
                 f1.BackgroundTransparency = 1
                 f1.Size = UDim2.new(1, 0, 1, 0)
@@ -7983,7 +7983,7 @@ run(function()
                 textLabel.BackgroundTransparency = 1
                 textLabel.Size = UDim2.new(0, 200, 0, 50)
                 textLabel.FontFace = Font.new("rbxassetid://11702779240")
-                textLabel.Text = "Radium"
+                textLabel.Text = textthing
                 textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
                 textLabel.TextSize = 24
                 textLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -8003,17 +8003,10 @@ run(function()
         Tooltip = "Displays a watermark"
     })
 
-	WatermarkModule:CreateTextBox({
+	textthing = WatermarkModule:CreateTextBox({
 		Name = "Text",
-		Default = "Radium Client",
+		Default = "Radium",
 		Function = function(val)
-			if textLabelElement and type(val) == "string" then
-				textLabelElement.Text = val
-				updateTextLabelSize()
-			elseif textLabelElement then
-				textLabelElement.Text = "Radium"
-				updateTextLabelSize()
-			end
 		end
 	})
 
