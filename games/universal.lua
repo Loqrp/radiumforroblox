@@ -7988,7 +7988,7 @@ run(function()
                 watermarkTextLabel.Size = UDim2.new(0, 200, 0, 50)
                 watermarkTextLabel.Position = UDim2.new(0, 10, 0, 10)
                 watermarkTextLabel.FontFace = Font.new("rbxassetid://11702779240")
-                watermarkTextLabel.Text = cooltext
+                watermarkTextLabel.Text = "Radium"
                 watermarkTextLabel.TextColor3 = Color3.new(1, 1, 1)
                 watermarkTextLabel.TextSize = 24
                 watermarkTextLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -8005,12 +8005,18 @@ run(function()
                 end
             end
         end,
-        Tooltip = "Displays a watermark."
+        Tooltip = "Displays a watermark"
     })
 
-    cooltext = WatermarkModule.Module:CreateTextBox({
+    WatermarkModule.Module:CreateTextBox({
         Name = "Text",
         Default = "Radium",
+        Function = function(val)
+            if watermarkTextLabel then
+                watermarkTextLabel.Text = val
+                updateTextLabelSize()
+            end
+        end
     })
 
     WatermarkModule.Module:CreateColorSlider({
