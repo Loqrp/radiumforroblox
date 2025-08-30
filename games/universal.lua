@@ -7972,7 +7972,7 @@ run(function()
                 WatermarkModule:Clean(function() pcall(function() screenGui:Destroy() end) end)
 
                 local f1 = Instance.new("Frame")
-                f1.Name = "aligment"
+                f1.Name = "aligment	"
                 f1.Parent = screenGui
                 f1.BackgroundTransparency = 1
                 f1.Size = UDim2.new(1, 0, 1, 0)
@@ -8000,19 +8000,22 @@ run(function()
                 end
             end
         end,
-        Tooltip = "Displays a customizable watermark."
+        Tooltip = "Displays a watermark"
     })
 
-    WatermarkModule:CreateTextBox({
-        Name = "Text",
-        Default = "Radium",
-        Function = function(val)
-            if textLabelElement then
-                textLabelElement.Text = tostring(val)
-                updateTextLabelSize()
-            end
-        end
-    })
+	WatermarkModule:CreateTextBox({
+		Name = "Text",
+		Default = "Radium Client",
+		Function = function(val)
+			if textLabelElement and type(val) == "string" then
+				textLabelElement.Text = val
+				updateTextLabelSize()
+			elseif textLabelElement then
+				textLabelElement.Text = "Radium"
+				updateTextLabelSize()
+			end
+		end
+	})
 
     WatermarkModule:CreateColorSlider({
         Name = "Color",
