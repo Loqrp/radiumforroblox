@@ -1847,7 +1847,7 @@ run(function()
 						if not flyAllowed then
 							if tpToggle then
 								local airleft = (tick() - entitylib.character.AirTime)
-								if airleft > 2 then
+								if airleft > 1.9 then
 									if not oldy then
 										local ray = workspace:Raycast(root.Position, Vector3.new(0, -1000, 0), rayCheck)
 										if ray and TP.Enabled then
