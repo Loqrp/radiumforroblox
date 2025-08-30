@@ -7941,19 +7941,20 @@ end)
 
 
 run(function()
-    local SimpleWatermarkModule
+    local watermarkmodule
     local watermarkElement
     local textLabelElement
+    local textSizeSlider
 
-    SimpleWatermarkModule = vape.Categories.Render:CreateModule({
+    watermarkmodule = vape.Categories.Render:CreateModule({
         Name = "Watermark",
         Function = function(callback)
             if callback then
                 local screenGui = Instance.new("ScreenGui")
-                screenGui.Name = "radeumweeee"
+                screenGui.Name = "bbbb"
                 screenGui.ResetOnSpawn = false
                 screenGui.Parent = vape.gui
-                SimpleWatermarkModule:Clean(function() pcall(function() screenGui:Destroy() end) end)
+                watermarkmodule:Clean(function() pcall(function() screenGui:Destroy() end) end)
 
                 local f1 = Instance.new("Frame")
                 f1.Name = "f1"
@@ -7991,17 +7992,18 @@ run(function()
         Tooltip = "Displays a watermark"
     })
 
-    SimpleWatermarkModule:CreateTextBox({
+    watermarkmodule:CreateTextBox({
         Name = "Text",
         Default = "Radium",
         Function = function(val)
             if textLabelElement then
                 textLabelElement.Text = val
+                updateTextLabelSize()
             end
         end
     })
 
-    SimpleWatermarkModule:CreateColorSlider({
+    watermarkmodule:CreateColorSlider({
         Name = "Color",
         DefaultHue = 0,
         DefaultSat = 0,
@@ -8014,21 +8016,30 @@ run(function()
         end
     })
 
-    SimpleWatermarkModule:CreateSlider({
+    local function updateTextLabelSize()
+        if textLabelElement and textSizeSlider then
+            local textSize = textSizeSlider.Value
+            textLabelElement.TextSize = textSize
+            
+            local textService = game:GetService("TextService")
+            local textBounds = textService:GetTextSize(
+                textLabelElement.Text,
+                textLabelElement.TextSize,
+                textLabelElement.FontFace,
+                Vector2.new(math.huge, math.huge)
+            )
+            textLabelElement.Size = UDim2.new(0, textBounds.X + 10, 0, textBounds.Y + 10)
+        end
+    end
+
+    textSizeSlider = watermarkmodule:CreateSlider({
         Name = "Size",
         Min = 10,
         Max = 100,
         Default = 24,
         Function = function(val)
             if textLabelElement then
-                textLabelElement.TextSize = val
-                local textBounds = game:GetService("TextService"):GetTextSize(
-                    textLabelElement.Text,
-                    textLabelElement.TextSize,
-                    textLabelElement.FontFace,
-                    Vector2.new(math.huge, math.huge)
-                )
-                textLabelElement.Size = UDim2.new(0, textBounds.X + 10, 0, textBounds.Y + 10)
+                updateTextLabelSize()
             end
         end
     })
