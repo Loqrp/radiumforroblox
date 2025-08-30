@@ -10297,19 +10297,9 @@ run(function()
         Name = "Chatmover",
         Function = function(callback)
             if callback then
-                local originalAlignment = nil
-                
                 if textChatService and textChatService.ChatWindowConfiguration then
-                    originalAlignment = textChatService.ChatWindowConfiguration.VerticalAlignment
                     textChatService.ChatWindowConfiguration.VerticalAlignment = Enum.VerticalAlignment.Bottom
                 end
-                
-                local function cleanup()
-                    if originalAlignment and textChatService and textChatService.ChatWindowConfiguration then
-                        textChatService.ChatWindowConfiguration.VerticalAlignment = originalAlignment
-                    end
-                end
-                
                 Chatmover:Clean(cleanup)
             end
         end,
