@@ -7950,7 +7950,7 @@ run(function()
         Function = function(callback)
             if callback then
                 local screenGui = Instance.new("ScreenGui")
-                screenGui.Name = "radeumweee"
+                screenGui.Name = "radeumweeee"
                 screenGui.ResetOnSpawn = false
                 screenGui.Parent = vape.gui
                 SimpleWatermarkModule:Clean(function() pcall(function() screenGui:Destroy() end) end)
@@ -7972,7 +7972,7 @@ run(function()
                 textLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
                 textLabel.BorderSizePixel = 0
                 textLabel.Size = UDim2.new(0, 200, 0, 50)
-                textLabel.Font = Enum.Font.Unknown
+                textLabel.FontFace = Font.new("rbxassetid://11702779240")
                 textLabel.Text = "Radium"
                 textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
                 textLabel.TextSize = 24.000
@@ -8010,6 +8010,25 @@ run(function()
         Function = function(hue, sat, val, opacity)
             if textLabelElement then
                 textLabelElement.TextColor3 = Color3.fromHSV(hue, sat, val)
+            end
+        end
+    })
+
+    SimpleWatermarkModule:CreateSlider({
+        Name = "Size",
+        Min = 10,
+        Max = 100,
+        Default = 24,
+        Function = function(val)
+            if textLabelElement then
+                textLabelElement.TextSize = val
+                local textBounds = game:GetService("TextService"):GetTextSize(
+                    textLabelElement.Text,
+                    textLabelElement.TextSize,
+                    textLabelElement.FontFace,
+                    Vector2.new(math.huge, math.huge)
+                )
+                textLabelElement.Size = UDim2.new(0, textBounds.X + 10, 0, textBounds.Y + 10)
             end
         end
     })
