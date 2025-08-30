@@ -8008,16 +8008,16 @@ run(function()
         Tooltip = "Displays a watermark"
     })
 
-    local textBoxObject = WatermarkModule.Module:CreateTextBox({
-        Name = "Text",
-        Default = "Radium",
-        Function = function(val)
-            if watermarkTextLabel then
-                watermarkTextLabel.Text = val
-                updateTextLabelDisplay()
-            end
-        end
-    })
+	local textBoxObject = WatermarkModule.Module:CreateTextBox({
+		Name = "Text",
+		Default = "Radium",
+		Function = function(val)
+			if watermarkTextLabel then
+				watermarkTextLabel.Text = val or "Radium"
+				updateTextLabelDisplay()
+			end
+		end
+	})
 
     WatermarkModule.Module:CreateColorSlider({
         Name = "Color",
