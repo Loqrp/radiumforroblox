@@ -7941,56 +7941,43 @@ end)
 
 
 run(function()
-    local WatermarkModule
+    local watermarkmodule
     local watermarkElement
     local textLabelElement
-    local textSizeSlider
 
-    local function updateTextLabelSize()
-        if not textLabelElement then return end
-        local textSize = textSizeSlider.Value
-        textLabelElement.TextSize = textSize
-
-        local textService = game:GetService("TextService")
-        local textBounds = textService:GetTextSize(
-            textLabelElement.Text,
-            textLabelElement.TextSize,
-            textLabelElement.FontFace,
-            Vector2.new(math.huge, math.huge)
-        )
-        textLabelElement.Size = UDim2.new(0, textBounds.X + 10, 0, textBounds.Y + 10)
-    end
-
-    WatermarkModule = vape.Categories.Render:CreateModule({
+    watermarkmodule = vape.Categories.Render:CreateModule({
         Name = "Watermark",
         Function = function(callback)
             if callback then
                 local screenGui = Instance.new("ScreenGui")
-                screenGui.Name = "WatermarkGUI"
+                screenGui.Name = "zzzvbz"
                 screenGui.ResetOnSpawn = false
                 screenGui.Parent = vape.gui
-                WatermarkModule:Clean(function() pcall(function() screenGui:Destroy() end) end)
+                watermarkmodule:Clean(function() pcall(function() screenGui:Destroy() end) end)
 
                 local f1 = Instance.new("Frame")
-                f1.Name = "aligment"
+                f1.Name = "f1"
                 f1.Parent = screenGui
-                f1.BackgroundTransparency = 1
+                f1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                f1.BackgroundTransparency = 1.000
+                f1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                f1.BorderSizePixel = 0
                 f1.Size = UDim2.new(1, 0, 1, 0)
                 watermarkElement = f1
 
                 local textLabel = Instance.new("TextLabel")
                 textLabel.Parent = f1
-                textLabel.BackgroundTransparency = 1
+                textLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                textLabel.BackgroundTransparency = 1.000
+                textLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                textLabel.BorderSizePixel = 0
                 textLabel.Size = UDim2.new(0, 200, 0, 50)
-                textLabel.FontFace = Font.new("rbxassetid://11702779240")
-                textLabel.Text = textthing
+                textLabel.Font = Enum.Font.Unknown
+                textLabel.Text = "Radium"
                 textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-                textLabel.TextSize = 24
+                textLabel.TextSize = 24.000
                 textLabel.TextXAlignment = Enum.TextXAlignment.Left
                 textLabel.TextYAlignment = Enum.TextYAlignment.Top
-                textLabelElement = textLabel
-
-                updateTextLabelSize()
 
             else
                 if watermarkElement then
@@ -8003,14 +7990,15 @@ run(function()
         Tooltip = "Displays a watermark"
     })
 
-	textthing = WatermarkModule:CreateTextBox({
-		Name = "Text",
-		Default = "Radium",
-		Function = function(val)
-		end
-	})
+    watermarkmodule:CreateTextBox({
+        Name = "Text",
+        Default = "Radium",
+        Function = function(val)
+                textLabel.Text = val
+        end
+    })
 
-    WatermarkModule:CreateColorSlider({
+    watermarkmodule:CreateColorSlider({
         Name = "Color",
         DefaultHue = 0,
         DefaultSat = 0,
@@ -8023,15 +8011,4 @@ run(function()
         end
     })
 
-    textSizeSlider = WatermarkModule:CreateSlider({
-        Name = "Size",
-        Min = 10,
-        Max = 100,
-        Default = 24,
-        Function = function(val)
-            if textLabelElement then
-                updateTextLabelSize()
-            end
-        end
-    })
 end)
