@@ -8025,9 +8025,93 @@ run(function()
         Name = "Size",
         Min = 10,
         Max = 100,
-        Default = 24,
+        Default = 24, 
         Function = function(val)
             updateTextLabelDisplay()
+        end
+    })
+
+end)
+
+
+run(function()
+    local ToyAnimationModule
+    local SelectedAnimation = {Value = "None"}
+
+    local AnimationPresets = {
+        ["Toy"] = {
+            "http://www.roblox.com/asset/?id=973771666",
+            "http://www.roblox.com/asset/?id=973771666",
+            "http://www.roblox.com/asset/?id=973767371",
+            "http://www.roblox.com/asset/?id=973766674",
+            "http://www.roblox.com/asset/?id=973770652",
+            "http://www.roblox.com/asset/?id=973773170",
+            "http://www.roblox.com/asset/?id=973768058"
+        },
+        ["None"] = {
+            "http://www.roblox.com/asset/?id=507766666",
+            "http://www.roblox.com/asset/?id=507766951",
+            "http://www.roblox.com/asset/?id=507777237",
+            "http://www.roblox.com/asset/?id=507767714",
+            "http://www.roblox.com/asset/?id=507769019",
+            "http://www.roblox.com/asset/?id=507765717",
+            "http://www.roblox.com/asset/?id=507767968"
+        }
+    }
+
+    local function applyAnimations(character, presetName)
+        local preset = AnimationPresets[presetName]
+        if not preset or not character:FindFirstChild("Animate") then
+            return
+        end
+
+        local Animate = character.Animate
+
+        pcall(function() Animate.idle.Animation1.AnimationId = preset[1] end)
+        pcall(function() Animate.idle.Animation2.AnimationId = preset[2] end)
+        pcall(function() Animate.walk.WalkAnim.AnimationId = preset[3] end)
+        pcall(function() Animate.run.RunAnim.AnimationId = preset[4] end)
+        pcall(function() Animate.jump.JumpAnim.AnimationId = preset[5] end)
+        pcall(function() Animate.climb.ClimbAnim.AnimationId = preset[6] end)
+        pcall(function() Animate.fall.FallAnim.AnimationId = preset[7] end)
+
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+
+    ToyAnimationModule = vape.Categories.Utility:CreateModule({
+        Name = "ToyAnim",
+        Function = function(callback)
+            if callback then
+                ToyAnimationModule:Clean(entitylib.Events.LocalAdded:Connect(function(character)
+                    if SelectedAnimation.Value == "Toy" then
+                        applyAnimations(character, SelectedAnimation.Value)
+                    end
+                end))
+
+                if entitylib.isAlive and SelectedAnimation.Value == "Toy" then
+                    applyAnimations(entitylib.character, SelectedAnimation.Value)
+                end
+
+            else
+                if entitylib.isAlive then
+                    applyAnimations(entitylib.character, "None")
+                end
+            end
+        end,
+        Tooltip = "fried apples"
+    })
+
+    local AnimationDropdown = ToyAnimationModule:CreateDropdown({
+        Name = "Animation",
+        List = {"None", "Toy"},
+        Function = function(selected)
+            SelectedAnimation.Value = selected
+            if ToyAnimationModule.Enabled and entitylib.isAlive then
+                applyAnimations(entitylib.character, selected)
+            end
         end
     })
 
