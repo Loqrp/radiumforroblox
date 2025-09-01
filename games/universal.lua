@@ -8005,7 +8005,7 @@ run(function()
                 end
             end
         end,
-        Tooltip = "Displays a watermark"
+        Tooltip = "Displays a fried apple"
     })
 
     WatermarkModule.Module:CreateColorSlider({
