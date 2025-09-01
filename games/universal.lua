@@ -8035,7 +8035,7 @@ end)
 
 
 
-runFunction(function()
+run(function()
 	local lightingsettings = {}
 	local lightingchanged = false
 	local Fullbright = {Enabled = false}
