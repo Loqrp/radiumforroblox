@@ -8033,3 +8033,49 @@ run(function()
 
 end)
 
+
+
+runFunction(function()
+	local lightingsettings = {}
+	local lightingchanged = false
+	local Fullbright = {Enabled = false}
+	Fullbright = vape.Categories.Render:CreateModule({
+		Name = "Fullbright",
+		Function = function(callback)
+			if callback then 
+				lightingsettings.Brightness = lightingService.Brightness
+				lightingsettings.ClockTime = lightingService.ClockTime
+				lightingsettings.FogEnd = lightingService.FogEnd
+				lightingsettings.GlobalShadows = lightingService.GlobalShadows
+				lightingsettings.OutdoorAmbient = lightingService.OutdoorAmbient
+				lightingchanged = true
+				lightingService.Brightness = 2
+				lightingService.ClockTime = 14
+				lightingService.FogEnd = 100000
+				lightingService.GlobalShadows = false
+				lightingService.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+				lightingchanged = false
+				table.insert(Fullbright.Connections, lightingService.Changed:Connect(function()
+					if not lightingchanged then
+						lightingsettings.Brightness = lightingService.Brightness
+						lightingsettings.ClockTime = lightingService.ClockTime
+						lightingsettings.FogEnd = lightingService.FogEnd
+						lightingsettings.GlobalShadows = lightingService.GlobalShadows 
+						lightingsettings.OutdoorAmbient = lightingService.OutdoorAmbient
+						lightingchanged = true
+						lightingService.Brightness = 2
+						lightingService.ClockTime = 14
+						lightingService.FogEnd = 100000
+						lightingService.GlobalShadows = false
+						lightingService.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+						lightingchanged = false
+					end
+				end))
+			else
+				for name, val in pairs(lightingsettings) do 
+					lightingService[name] = val
+				end
+			end
+		end
+	})
+end)
