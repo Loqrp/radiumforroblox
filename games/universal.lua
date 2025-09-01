@@ -8036,7 +8036,6 @@ end)
 
 run(function()
     local ToyAnimationModule
-    local SelectedAnimation = {Value = "None"}
 
     local AnimationPresets = {
         ["Toy"] = {
@@ -8082,17 +8081,15 @@ run(function()
     end
 
     ToyAnimationModule = vape.Categories.Utility:CreateModule({
-        Name = "ToyAnim",
+        Name = "ToyAnimation",
         Function = function(callback)
             if callback then
                 ToyAnimationModule:Clean(entitylib.Events.LocalAdded:Connect(function(character)
-                    if SelectedAnimation.Value == "Toy" then
-                        applyAnimations(character, SelectedAnimation.Value)
-                    end
+                    applyAnimations(character, "Toy")
                 end))
 
-                if entitylib.isAlive and SelectedAnimation.Value == "Toy" then
-                    applyAnimations(entitylib.character, SelectedAnimation.Value)
+                if entitylib.isAlive then
+                    applyAnimations(entitylib.character, "Toy")
                 end
 
             else
@@ -8101,18 +8098,6 @@ run(function()
                 end
             end
         end,
-        Tooltip = "fried apples"
+        Tooltip = "FRIEDAPPLES"
     })
-
-    local AnimationDropdown = ToyAnimationModule:CreateDropdown({
-        Name = "Animation",
-        List = {"None", "Toy"},
-        Function = function(selected)
-            SelectedAnimation.Value = selected
-            if ToyAnimationModule.Enabled and entitylib.isAlive then
-                applyAnimations(entitylib.character, selected)
-            end
-        end
-    })
-
 end)
